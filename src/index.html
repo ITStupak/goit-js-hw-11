@@ -16,15 +16,12 @@
   <body>
     <h1 class="title">Homework-11</h1>
     <form class="form">
-      <label for="">
-        <input
-          class="search-input"
-          type="text"
-          placeholder="Search images..."
-        />
-      </label>
-      <button class="search-btn" type="submit">Start</button>
+      <input class="search-input" type="text" placeholder="Search images..." />
+      <button class="search-btn" type="submit">Search</button>
     </form>
+
+    <span class="loader is-visible"></span>
+
     <ul class="gallery"></ul>
 
     <script src="./js/pixabay-api.js" type="module"></script>
