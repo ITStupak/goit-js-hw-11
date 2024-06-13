@@ -1,123 +1,36 @@
-const images = [
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg',
-    description: 'Hokkaido Flower',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677_1280.jpg',
-    description: 'Container Haulage Freight',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/16/09/47/beach-4206785__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/16/09/47/beach-4206785_1280.jpg',
-    description: 'Aerial Beach View',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619_1280.jpg',
-    description: 'Flower Blooms',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2018/09/13/10/36/mountains-3674334__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2018/09/13/10/36/mountains-3674334_1280.jpg',
-    description: 'Alpine Mountains',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/16/23/04/landscape-4208571__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/16/23/04/landscape-4208571_1280.jpg',
-    description: 'Mountain Lake Sailing',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/17/09/27/the-alps-4209272__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/17/09/27/the-alps-4209272_1280.jpg',
-    description: 'Alpine Spring Meadows',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255_1280.jpg',
-    description: 'Nature Landscape',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843_1280.jpg',
-    description: 'Lighthouse Coast Sea',
-  },
-];
 
-const gallery = document.querySelector('.gallery');
-
-function galleryTemplate({preview, original, description}) {
-    return `<li class="gallery-item">
-        <a class="gallery-link" href="${original}">
+function createImage({ largeImageURL, previewURL, id, comments, downloads, likes, views }) {
+  return `<li class="gallery-item">
+        <a class="gallery-link" href="${largeImageURL}">
           <img
             class="gallery-image"
-            src="${preview}"
-            data-source="${original}"
-            alt="${description}"
+            src="${largeImageURL}"
+            data-source="${largeImageURL}"
+            alt="${id}"
           />
         </a>
         <div class="gallery-text">
           <div class="text-property">
             <p class="text-dscr">Likes</p>
-            <p class="text-count">1813</p>
+            <p class="text-count">${likes}</p>
           </div>
           <div class="text-property">
             <p class="text-dscr">Views</p>
-            <p class="text-count">900290</p>
+            <p class="text-count">${views}</p>
           </div>
           <div class="text-property">
             <p class="text-dscr">Comments</p>
-            <p class="text-count">229</p>
+            <p class="text-count">${comments}</p>
           </div>
           <div class="text-property">
             <p class="text-dscr">Downloads</p>
-            <p class="text-count">610937</p>
+            <p class="text-count">${downloads}</p>
           </div>
         </div>
-    </li>`
-};
-function galleriesTemplate(arr) {
-  return arr.map(galleryTemplate).join('\n');
+    </li>`    
 }
-const markup = galleriesTemplate(images);
-gallery.innerHTML = markup;
 
-export default markup;
-
-// gallery.addEventListener('click', onClickImage);
-// function onClickImage(event) {
-//     event.preventDefault();
-//     if (event.target.nodeName !== "IMG") {
-//         return;
-//       }
-//     const selectedImage = basicLightbox.create(`
-//     <img width="1112" height="640" src="${event.target.dataset.source}">`);
-//     selectedImage.show();
-
-//     gallery.addEventListener('keydown', (event) => {
-//         if (event.code !== "Escape") {
-//           return;
-//       }
-//       selectedImage.close();
-//     });
-// }
+export function createImagesList(data) {
+  const arr = data.hits;
+  return arr.map(createImage).join('');
+}
