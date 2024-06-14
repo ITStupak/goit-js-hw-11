@@ -1,12 +1,12 @@
 
-function createImage({ largeImageURL, previewURL, id, comments, downloads, likes, views }) {
+function createImage({ largeImageURL, webformatURL, tags, comments, downloads, likes, views }) {
   return `<li class="gallery-item">
         <a class="gallery-link" href="${largeImageURL}">
           <img
             class="gallery-image"
-            src="${largeImageURL}"
+            src="${webformatURL}"
             data-source="${largeImageURL}"
-            alt="${id}"
+            alt="${tags}"
           />
         </a>
         <div class="gallery-text">

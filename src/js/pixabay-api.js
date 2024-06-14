@@ -5,7 +5,7 @@ export function getImages(userData) {
     q: userData,
     image_type: 'photo',
     orientation: 'horizontal',
-    per_page: '100',
+    per_page: '12',
     safesearch: false,
     });
 
