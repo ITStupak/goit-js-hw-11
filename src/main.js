@@ -1,7 +1,5 @@
 import { getImages } from "./js/pixabay-api.js";
 import { createImagesList } from "./js/render-functions.js";
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('.form');
 const gallery = document.querySelector('.gallery');
@@ -20,6 +18,7 @@ function sendUserRequest(e) {
                 if (data.total !== 0) {
                     const markup = createImagesList(data);
                     gallery.insertAdjacentHTML('beforeend', markup);
+                    // gallery.refresh();
                     
                     const imageLoadPromises = Array.from(gallery.querySelectorAll('img')).map(image =>
                     new Promise(resolve => {
