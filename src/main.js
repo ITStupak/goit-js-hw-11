@@ -1,6 +1,10 @@
 import { getImages } from "./js/pixabay-api.js";
 import { createImagesList } from "./js/render-functions.js";
 
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
+import imageUrl from './img/icon-error.svg';
+
 const form = document.querySelector('.form');
 const gallery = document.querySelector('.gallery');
 
@@ -18,7 +22,6 @@ function sendUserRequest(e) {
                 if (data.total !== 0) {
                     const markup = createImagesList(data);
                     gallery.insertAdjacentHTML('beforeend', markup);
-                    // gallery.refresh();
                     
                     const imageLoadPromises = Array.from(gallery.querySelectorAll('img')).map(image =>
                     new Promise(resolve => {
@@ -27,7 +30,28 @@ function sendUserRequest(e) {
                     );
                     return Promise.all(imageLoadPromises);
 
-                } else { alert('Sorry, there are no images matching your search query. Please try again!'); }
+                } else {
+                    console.log('Sorry, there are no images matching your search query. Please try again!');
+                    iziToast.error({
+                        message: 'Sorry, there are no images matching your search query. Please try again!',
+                        messageSize: '16',
+                        messageLineHeight: '1,5',
+                        messageColor: '#fafafb',        
+                        backgroundColor: '#ef4040',
+                        imageWidth: 302,
+                        position: 'topRight',
+                        theme: 'dark',
+                        close: true,
+                        closeOnEscape: true,
+                        closeOnClick: true,
+                        progressBar: true,
+                        progressBarColor: '#b51b1b',
+                        transitionIn: 'fadeInDown',
+                        transitionOut: 'fadeOutUp',
+                        iconUrl: imageUrl,
+                        iconColor: '#fafafb',
+                    });
+                 }
             })
             .then(() => loader.style.display = 'none')
             .catch((error) => {
@@ -35,5 +59,28 @@ function sendUserRequest(e) {
                 loader.style.display = 'none';
             })
         form.reset();
-    } else { alert('Enter your Request!') }
+    } else {
+        console.log('Enter your Request!');
+        iziToast.error({
+                        title: 'Error!',
+                        titleColor: '#fafafb', 
+                        message: 'Enter your Request!',
+                        messageSize: '16',
+                        messageColor: '#fafafb',        
+                        backgroundColor: '#ef4040',
+                        imageWidth: 432,
+                        position: 'topRight',
+                        theme: 'dark',
+                        close: true,
+                        closeOnEscape: true,
+                        closeOnClick: true,
+                        progressBar: true,
+                        progressBarColor: '#b51b1b',
+                        transitionIn: 'fadeInDown',
+                        transitionOut: 'fadeOutUp',
+                        iconUrl: imageUrl,
+                        iconColor: '#fafafb',
+                        timeout: 3000,
+                    });
+     }
 }
