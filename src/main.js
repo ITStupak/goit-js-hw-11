@@ -1,6 +1,9 @@
 import { getImages } from "./js/pixabay-api.js";
 import { createImagesList } from "./js/render-functions.js";
 
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import imageUrl from './img/icon-error.svg';
@@ -12,16 +15,33 @@ form.addEventListener('submit', sendUserRequest);
             
 function sendUserRequest(e) {
     e.preventDefault();
+    
     const userData = e.target.elements.request.value.trim();
-    if (userData !== '') {
-        gallery.innerHTML = '';
+    if (userData !== '') {       
+        gallery.innerHTML = '';        
+
         const loader = document.querySelector('.loader');
         loader.style.display = 'block';
+        
         getImages(userData)
             .then(data => {
                 if (data.total !== 0) {
                     const markup = createImagesList(data);
                     gallery.insertAdjacentHTML('beforeend', markup);
+
+                    const lightbox = new SimpleLightbox('.gallery-item a', {
+                        captions: true,
+                        captionSelector: 'img',
+                        captionType: 'attr',
+                        captionsData: 'alt',
+                        captionPosition: 'bottom',
+                        captionDelay: 250,
+                        animationSpeed: 300,
+                        widthRatio: 1,
+                        heightRatio: 0.95,
+                        disableRightClick: true,
+                    });
+                    lightbox.refresh();
                     
                     const imageLoadPromises = Array.from(gallery.querySelectorAll('img')).map(image =>
                     new Promise(resolve => {
@@ -29,7 +49,7 @@ function sendUserRequest(e) {
                     })
                     );
                     return Promise.all(imageLoadPromises);
-
+                    
                 } else {
                     console.log('Sorry, there are no images matching your search query. Please try again!');
                     iziToast.error({

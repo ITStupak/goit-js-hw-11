@@ -1,5 +1,4 @@
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+
 
 function createImage({ largeImageURL, webformatURL, tags, comments, downloads, likes, views }) {
   return `<li class="gallery-item">
@@ -28,23 +27,10 @@ function createImage({ largeImageURL, webformatURL, tags, comments, downloads, l
         <p class="gallery-text-count">${downloads}</p>
       </li>
     </ul> 
-  </li>`;   
+  </li>`;
 };
 
 export function createImagesList(data) {
   const arr = data.hits;
   return arr.map(createImage).join('');
 };
-
-const lightbox = new SimpleLightbox('.gallery-item a', {
-    captions: true,
-    captionSelector: 'img',
-    captionType: 'attr',
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-    animationSpeed: 300,
-    widthRatio: 1,
-    heightRatio: 0.95,
-    disableRightClick: true,
-});
